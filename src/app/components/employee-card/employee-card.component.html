@@ -1,0 +1,53 @@
+<div class="card animate-fade-in" appHighlight [highlightColor]="'#f0f9ff'">
+  <div class="flex items-start gap-4">
+    <!-- Employee Avatar -->
+    <img [src]="employee.avatar || '/default-avatar.png'" [alt]="employee.firstName + ' ' + employee.lastName"
+      class="w-20 h-20 rounded-full object-cover border-2 border-primary-200" />
+
+    <!-- Employee Info -->
+    <div class="flex-1">
+      <div class="flex items-start justify-between">
+        <div>
+          <h3 class="text-lg font-semibold text-gray-900">
+            {{ employee.firstName }} {{ employee.lastName }}
+          </h3>
+          <p class="text-sm text-gray-600">{{ employee.position }}</p>
+          <p class="text-sm text-primary-600 font-medium">{{ employee.department }}</p>
+        </div>
+
+        <!-- Status Badge -->
+        <span [class]="'px-3 py-1 rounded-full text-xs font-medium ' + getStatusColor()">
+          {{ employee.status }}
+        </span>
+      </div>
+
+      <!-- Contact Info -->
+      <div class="mt-3 space-y-1">
+        <p class="text-sm text-gray-700">
+          <span class="font-medium">Email:</span> {{ employee.email }}
+        </p>
+        <p class="text-sm text-gray-700">
+          <span class="font-medium">Phone:</span> {{ employee.phone | phoneFormat }}
+        </p>
+        <p class="text-sm text-gray-700">
+          <span class="font-medium">Hire Date:</span> {{ employee.hireDate | date:'mediumDate' }}
+        </p>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="mt-4 flex gap-2">
+        <a [routerLink]="['/employees', employee.id]" class="btn btn-primary text-sm" appTooltip
+          [tooltipText]="'View employee details'">
+          View Details
+        </a>
+        <a [routerLink]="['/employees', employee.id, 'edit']" class="btn btn-secondary text-sm" appTooltip
+          [tooltipText]="'Edit employee information'">
+          Edit
+        </a>
+        <button (click)="onDelete()" class="btn btn-danger text-sm" appTooltip [tooltipText]="'Delete employee'">
+          Delete
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

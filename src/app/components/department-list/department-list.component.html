@@ -1,0 +1,125 @@
+<div class="container mx-auto px-4 py-8">
+    <!-- Page Header -->
+    <div class="mb-8 flex items-center justify-between">
+        <div>
+            <h2 class="text-3xl font-bold text-gray-900 mb-2">Department Management</h2>
+            <p class="text-gray-600">Manage company departments</p>
+        </div>
+        <button *ngIf="!showForm" (click)="showAddForm()" class="btn btn-primary">
+            <svg class="w-5 h-5 inline-block mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+            </svg>
+            Add Department
+        </button>
+    </div>
+
+    <!-- Department Form -->
+    <div *ngIf="showForm" class="card mb-8 animate-slide-in">
+        <h3 class="text-xl font-semibold text-gray-900 mb-4">
+            {{ isEditMode ? 'Edit Department' : 'Add New Department' }}
+        </h3>
+
+        <form [formGroup]="departmentForm" (ngSubmit)="onSubmit()">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                <!-- Name -->
+                <div>
+                    <label class="label">
+                        Department Name <span class="text-red-600">*</span>
+                    </label>
+                    <input type="text" formControlName="name" [class.border-red-500]="isFieldInvalid('name')"
+                        class="input" placeholder="IT" />
+                    <p *ngIf="hasError('name', 'required')" class="error-message">
+                        Department name is required
+                    </p>
+                    <p *ngIf="hasError('name', 'minlength')" class="error-message">
+                        Name must be at least 2 characters
+                    </p>
+                </div>
+
+                <!-- Manager -->
+                <div>
+                    <label class="label">
+                        Manager <span class="text-red-600">*</span>
+                    </label>
+                    <input type="text" formControlName="manager" [class.border-red-500]="isFieldInvalid('manager')"
+                        class="input" placeholder="John Doe" />
+                    <p *ngIf="hasError('manager', 'required')" class="error-message">
+                        Manager is required
+                    </p>
+                </div>
+
+                <!-- Description -->
+                <div class="md:col-span-2">
+                    <label class="label">
+                        Description <span class="text-red-600">*</span>
+                    </label>
+                    <textarea formControlName="description" [class.border-red-500]="isFieldInvalid('description')"
+                        class="input" rows="3" placeholder="Department description..."></textarea>
+                    <p *ngIf="hasError('description', 'required')" class="error-message">
+                        Description is required
+                    </p>
+                </div>
+            </div>
+
+            <!-- Form Actions -->
+            <div class="flex gap-4">
+                <button type="submit" class="btn btn-primary">
+                    {{ isEditMode ? 'Update' : 'Create' }} Department
+                </button>
+                <button type="button" (click)="cancelForm()" class="btn btn-secondary">
+                    Cancel
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Loading State -->
+    <div *ngIf="loading" class="text-center py-12">
+        <div class="inline-block animate-spin rounded-full h-12 w-12 border-4 border-primary-600 border-t-transparent">
+        </div>
+        <p class="mt-4 text-gray-600">Loading departments...</p>
+    </div>
+
+    <!-- Departments Grid -->
+    <div *ngIf="!loading" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div *ngFor="let dept of departments" class="card animate-fade-in">
+            <div class="flex items-start justify-between mb-4">
+                <div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-1">{{ dept.name }}</h3>
+                    <p class="text-sm text-gray-600">
+                        <span class="font-medium">Manager:</span> {{ dept.manager }}
+                    </p>
+                </div>
+                <div class="flex gap-2">
+                    <button (click)="editDepartment(dept)"
+                        class="p-2 text-primary-600 hover:bg-primary-50 rounded-lg transition-colors" title="Edit">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                        </svg>
+                    </button>
+                    <button (click)="deleteDepartment(dept.id!, dept.name)"
+                        class="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors" title="Delete">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <p class="text-gray-700">{{ dept.description }}</p>
+        </div>
+    </div>
+
+    <!-- Empty State -->
+    <div *ngIf="!loading && departments.length === 0" class="text-center py-12">
+        <svg class="w-16 h-16 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+        </svg>
+        <p class="text-gray-600 text-lg mb-4">No departments found</p>
+        <button (click)="showAddForm()" class="btn btn-primary">
+            Add Your First Department
+        </button>
+    </div>
+</div>

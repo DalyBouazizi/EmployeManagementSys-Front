@@ -1,0 +1,209 @@
+<div class="container mx-auto px-4 py-8">
+    <!-- Back Button -->
+    <div class="mb-6">
+        <a routerLink="/employees" class="text-primary-600 hover:text-primary-700 flex items-center gap-2">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+            </svg>
+            Back to Employees
+        </a>
+    </div>
+
+    <!-- Page Header -->
+    <div class="mb-8">
+        <h2 class="text-3xl font-bold text-gray-900 mb-2">
+            {{ isEditMode ? 'Edit Employee' : 'Add New Employee' }}
+        </h2>
+        <p class="text-gray-600">{{ isEditMode ? 'Update employee information' : 'Fill in the details to add a new
+            employee' }}</p>
+    </div>
+
+    <!-- Loading State -->
+    <div *ngIf="loading" class="text-center py-12">
+        <div class="inline-block animate-spin rounded-full h-12 w-12 border-4 border-primary-600 border-t-transparent">
+        </div>
+        <p class="mt-4 text-gray-600">Loading...</p>
+    </div>
+
+    <!-- Form -->
+    <div *ngIf="!loading" class="max-w-3xl mx-auto">
+        <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()" class="card">
+            <!-- Personal Information Section -->
+            <div class="mb-8">
+                <h3 class="text-xl font-semibold text-gray-900 mb-4 pb-2 border-b border-gray-200">
+                    Personal Information
+                </h3>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- First Name -->
+                    <div>
+                        <label class="label">
+                            First Name <span class="text-red-600">*</span>
+                        </label>
+                        <input type="text" formControlName="firstName"
+                            [class.border-red-500]="isFieldInvalid('firstName')" class="input" placeholder="John" />
+                        <p *ngIf="hasError('firstName', 'required')" class="error-message">
+                            First name is required
+                        </p>
+                        <p *ngIf="hasError('firstName', 'minlength')" class="error-message">
+                            First name must be at least 2 characters
+                        </p>
+                    </div>
+
+                    <!-- Last Name -->
+                    <div>
+                        <label class="label">
+                            Last Name <span class="text-red-600">*</span>
+                        </label>
+                        <input type="text" formControlName="lastName"
+                            [class.border-red-500]="isFieldInvalid('lastName')" class="input" placeholder="Doe" />
+                        <p *ngIf="hasError('lastName', 'required')" class="error-message">
+                            Last name is required
+                        </p>
+                        <p *ngIf="hasError('lastName', 'minlength')" class="error-message">
+                            Last name must be at least 2 characters
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact Information Section -->
+            <div class="mb-8">
+                <h3 class="text-xl font-semibold text-gray-900 mb-4 pb-2 border-b border-gray-200">
+                    Contact Information
+                </h3>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Email -->
+                    <div>
+                        <label class="label">
+                            Email <span class="text-red-600">*</span>
+                        </label>
+                        <input type="email" formControlName="email" [class.border-red-500]="isFieldInvalid('email')"
+                            class="input" placeholder="john.doe@company.com" />
+                        <p *ngIf="hasError('email', 'required')" class="error-message">
+                            Email is required
+                        </p>
+                        <p *ngIf="hasError('email', 'email')" class="error-message">
+                            Please enter a valid email address
+                        </p>
+                    </div>
+
+                    <!-- Phone -->
+                    <div>
+                        <label class="label">
+                            Phone <span class="text-red-600">*</span>
+                        </label>
+                        <input type="tel" formControlName="phone" [class.border-red-500]="isFieldInvalid('phone')"
+                            class="input" placeholder="20123456" />
+                        <p *ngIf="hasError('phone', 'required')" class="error-message">
+                            Phone is required
+                        </p>
+                        <p *ngIf="hasError('phone', 'pattern')" class="error-message">
+                            Phone must be 8 digits (e.g., 20123456)
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Employment Information Section -->
+            <div class="mb-8">
+                <h3 class="text-xl font-semibold text-gray-900 mb-4 pb-2 border-b border-gray-200">
+                    Employment Information
+                </h3>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Department (Using Nested Component) -->
+                    <app-department-selector formControlName="department" [label]="'Department'"
+                        [required]="true"></app-department-selector>
+
+                    <!-- Position -->
+                    <div>
+                        <label class="label">
+                            Position <span class="text-red-600">*</span>
+                        </label>
+                        <input type="text" formControlName="position"
+                            [class.border-red-500]="isFieldInvalid('position')" class="input"
+                            placeholder="Senior Developer" />
+                        <p *ngIf="hasError('position', 'required')" class="error-message">
+                            Position is required
+                        </p>
+                        <p *ngIf="hasError('position', 'minlength')" class="error-message">
+                            Position must be at least 2 characters
+                        </p>
+                    </div>
+
+                    <!-- Salary -->
+                    <div>
+                        <label class="label">
+                            Salary <span class="text-red-600">*</span>
+                        </label>
+                        <input type="number" formControlName="salary" [class.border-red-500]="isFieldInvalid('salary')"
+                            class="input" placeholder="50000" />
+                        <p *ngIf="hasError('salary', 'required')" class="error-message">
+                            Salary is required
+                        </p>
+                        <p *ngIf="hasError('salary', 'min')" class="error-message">
+                            Salary must be a positive number
+                        </p>
+                    </div>
+
+                    <!-- Hire Date -->
+                    <div>
+                        <label class="label">
+                            Hire Date <span class="text-red-600">*</span>
+                        </label>
+                        <input type="date" formControlName="hireDate"
+                            [class.border-red-500]="isFieldInvalid('hireDate')" class="input" />
+                        <p *ngIf="hasError('hireDate', 'required')" class="error-message">
+                            Hire date is required
+                        </p>
+                    </div>
+
+                    <!-- Status -->
+                    <div>
+                        <label class="label">
+                            Status <span class="text-red-600">*</span>
+                        </label>
+                        <select formControlName="status" [class.border-red-500]="isFieldInvalid('status')"
+                            class="input">
+                            <option *ngFor="let status of statuses" [value]="status">{{ status }}</option>
+                        </select>
+                        <p *ngIf="hasError('status', 'required')" class="error-message">
+                            Status is required
+                        </p>
+                    </div>
+
+                    <!-- Avatar URL (Optional) -->
+                    <div>
+                        <label class="label">
+                            Avatar URL (Optional)
+                        </label>
+                        <input type="url" formControlName="avatar" class="input"
+                            placeholder="https://example.com/avatar.jpg" />
+                    </div>
+                </div>
+            </div>
+
+            <!-- Form Actions -->
+            <div class="flex gap-4 pt-6 border-t border-gray-200">
+                <button type="submit" [disabled]="submitting" class="btn btn-primary flex-1 md:flex-none">
+                    <span *ngIf="!submitting">{{ isEditMode ? 'Update Employee' : 'Create Employee' }}</span>
+                    <span *ngIf="submitting" class="flex items-center justify-center gap-2">
+                        <svg class="animate-spin h-5 w-5" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">
+                            </circle>
+                            <path class="opacity-75" fill="currentColor"
+                                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                            </path>
+                        </svg>
+                        Saving...
+                    </span>
+                </button>
+                <a routerLink="/employees" class="btn btn-secondary flex-1 md:flex-none">
+                    Cancel
+                </a>
+            </div>
+        </form>
+    </div>
+</div>

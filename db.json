@@ -1,0 +1,166 @@
+{
+  "employees": [
+    {
+      "firstName": "Mohamed",
+      "lastName": "Ben Aloulou",
+      "email": "mohamed.benali@company.com",
+      "phone": "20123456",
+      "department": "IT",
+      "position": "Senior Developer",
+      "salary": 75000,
+      "hireDate": "2020-01-15",
+      "status": "Active",
+      "avatar": "https://randomuser.me/api/portraits/men/32.jpg",
+      "id": 1
+    },
+    {
+      "id": 2,
+      "firstName": "Fatma",
+      "lastName": "Trabelsi",
+      "email": "fatma.trabelsi@company.com",
+      "phone": "22345678",
+      "department": "HR",
+      "position": "HR Manager",
+      "salary": 65000,
+      "hireDate": "2019-03-20",
+      "status": "Active",
+      "avatar": "https://randomuser.me/api/portraits/women/44.jpg"
+    },
+    {
+      "id": 3,
+      "firstName": "Ahmed",
+      "lastName": "Sahraoui",
+      "email": "ahmed.sahraoui@company.com",
+      "phone": "23456789",
+      "department": "Sales",
+      "position": "Sales Representative",
+      "salary": 55000,
+      "hireDate": "2021-06-10",
+      "status": "Active",
+      "avatar": "https://randomuser.me/api/portraits/men/45.jpg"
+    },
+    {
+      "id": 4,
+      "firstName": "Leila",
+      "lastName": "Mansouri",
+      "email": "leila.mansouri@company.com",
+      "phone": "24567890",
+      "department": "Marketing",
+      "position": "Marketing Specialist",
+      "salary": 60000,
+      "hireDate": "2020-09-05",
+      "status": "Active",
+      "avatar": "https://randomuser.me/api/portraits/women/68.jpg"
+    },
+    {
+      "id": 5,
+      "firstName": "Youssef",
+      "lastName": "Jziri",
+      "email": "youssef.jziri@company.com",
+      "phone": "25678901",
+      "department": "IT",
+      "position": "DevOps Engineer",
+      "salary": 80000,
+      "hireDate": "2018-11-12",
+      "status": "Active",
+      "avatar": "https://randomuser.me/api/portraits/men/52.jpg"
+    },
+    {
+      "id": 6,
+      "firstName": "Sara",
+      "lastName": "Bouaziz",
+      "email": "sara.bouaziz@company.com",
+      "phone": "26789012",
+      "department": "Finance",
+      "position": "Financial Analyst",
+      "salary": 70000,
+      "hireDate": "2021-02-28",
+      "status": "On Leave",
+      "avatar": "https://randomuser.me/api/portraits/women/65.jpg"
+    },
+    {
+      "id": 7,
+      "firstName": "Karim",
+      "lastName": "Hammami",
+      "email": "karim.hammami@company.com",
+      "phone": "27890123",
+      "department": "IT",
+      "position": "Full Stack Developer",
+      "salary": 72000,
+      "hireDate": "2020-05-18",
+      "status": "Active",
+      "avatar": "https://randomuser.me/api/portraits/men/67.jpg"
+    },
+    {
+      "id": 8,
+      "firstName": "Nour",
+      "lastName": "Cherif",
+      "email": "nour.cherif@company.com",
+      "phone": "28901234",
+      "department": "Marketing",
+      "position": "Digital Marketing Manager",
+      "salary": 68000,
+      "hireDate": "2019-08-22",
+      "status": "Active",
+      "avatar": "https://randomuser.me/api/portraits/women/72.jpg"
+    },
+    {
+      "id": 9,
+      "firstName": "Amine",
+      "lastName": "Khelifi",
+      "email": "amine.khelifi@company.com",
+      "phone": "29012345",
+      "department": "Sales",
+      "position": "Sales Manager",
+      "salary": 75000,
+      "hireDate": "2019-04-15",
+      "status": "Active",
+      "avatar": "https://randomuser.me/api/portraits/men/71.jpg"
+    },
+    {
+      "firstName": "mohamed",
+      "lastName": "bb",
+      "email": "aa@aa.aa",
+      "phone": "12345678",
+      "department": "IT",
+      "position": "aa",
+      "salary": 2,
+      "hireDate": "2025-12-31",
+      "status": "Active",
+      "avatar": "",
+      "id": 10
+    }
+  ],
+  "departments": [
+    {
+      "id": 1,
+      "name": "IT",
+      "description": "Département des Technologies de l'Information",
+      "manager": "Youssef Jziri"
+    },
+    {
+      "id": 2,
+      "name": "HR",
+      "description": "Département des Ressources Humaines",
+      "manager": "Fatma Trabelsi"
+    },
+    {
+      "id": 3,
+      "name": "Sales",
+      "description": "Département des Ventes et Développement Commercial",
+      "manager": "Amine Khelifi"
+    },
+    {
+      "id": 4,
+      "name": "Marketing",
+      "description": "Département Marketing et Communication",
+      "manager": "Nour Cherif"
+    },
+    {
+      "id": 5,
+      "name": "Finance",
+      "description": "Département Finance et Comptabilité",
+      "manager": "Sara Bouaziz"
+    }
+  ]
+}

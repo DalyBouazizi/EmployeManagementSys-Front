@@ -1,0 +1,37 @@
+<div class="bg-white rounded-lg shadow-md p-6 mb-6">
+    <h3 class="text-lg font-semibold text-gray-900 mb-4">Search & Filter</h3>
+
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <!-- Search Input -->
+        <div>
+            <label class="label">Search</label>
+            <input type="text" [(ngModel)]="searchTerm" (ngModelChange)="onSearchChange()"
+                placeholder="Search by name or email..." class="input" />
+        </div>
+
+        <!-- Department Filter -->
+        <div>
+            <label class="label">Department</label>
+            <select [(ngModel)]="selectedDepartment" (ngModelChange)="onDepartmentChange()" class="input">
+                <option value="">All Departments</option>
+                <option *ngFor="let dept of departments" [value]="dept">{{ dept }}</option>
+            </select>
+        </div>
+
+        <!-- Status Filter -->
+        <div>
+            <label class="label">Status</label>
+            <select [(ngModel)]="selectedStatus" (ngModelChange)="onStatusChange()" class="input">
+                <option value="">All Statuses</option>
+                <option *ngFor="let status of statuses" [value]="status">{{ status }}</option>
+            </select>
+        </div>
+
+        <!-- Clear Button -->
+        <div class="flex items-end">
+            <button (click)="clearFilters()" class="btn btn-secondary w-full">
+                Clear Filters
+            </button>
+        </div>
+    </div>
+</div>

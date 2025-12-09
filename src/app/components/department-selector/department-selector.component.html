@@ -1,0 +1,12 @@
+<div>
+    <label class="label">
+        {{ label }}
+        <span *ngIf="required" class="text-red-600">*</span>
+    </label>
+    <select [value]="value" (change)="onValueChange($event)" [disabled]="disabled" class="input">
+        <option value="">Select a department</option>
+        <option *ngFor="let dept of departments" [value]="dept.name">
+            {{ dept.name }}
+        </option>
+    </select>
+</div>
