@@ -1,9 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { Employee } from '../models/employee.model';
 
-/**
- * Custom pipe to search/filter employees by name or email
- */
 @Pipe({
     name: 'searchFilter',
     standalone: true

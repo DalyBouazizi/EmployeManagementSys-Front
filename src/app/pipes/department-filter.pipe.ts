@@ -1,9 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { Employee } from '../models/employee.model';
 
-/**
- * Custom pipe to filter employees by department
- */
 @Pipe({
     name: 'departmentFilter',
     standalone: true

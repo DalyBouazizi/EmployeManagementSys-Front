@@ -2,10 +2,6 @@ import { Component, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-/**
- * Nested component for search and filter controls
- * Used within employee-list component
- */
 @Component({
     selector: 'app-search-filter',
     standalone: true,
@@ -25,30 +21,18 @@ export class SearchFilterComponent {
     departments: string[] = ['IT', 'HR', 'Sales', 'Marketing', 'Finance'];
     statuses: string[] = ['Active', 'On Leave', 'Inactive'];
 
-    /**
-     * Emit search term changes
-     */
     onSearchChange(): void {
         this.searchChange.emit(this.searchTerm);
     }
 
-    /**
-     * Emit department filter changes
-     */
     onDepartmentChange(): void {
         this.departmentChange.emit(this.selectedDepartment);
     }
 
-    /**
-     * Emit status filter changes
-     */
     onStatusChange(): void {
         this.statusChange.emit(this.selectedStatus);
     }
 
-    /**
-     * Clear all filters
-     */
     clearFilters(): void {
         this.searchTerm = '';
         this.selectedDepartment = '';

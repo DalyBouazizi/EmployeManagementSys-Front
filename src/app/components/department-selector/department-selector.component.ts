@@ -4,10 +4,6 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { DepartmentService } from '../../services/department.service';
 import { Department } from '../../models/department.model';
 
-/**
- * Nested component for department selection
- * Implements ControlValueAccessor to work with reactive forms
- */
 @Component({
     selector: 'app-department-selector',
     standalone: true,
@@ -39,9 +35,6 @@ export class DepartmentSelectorComponent implements OnInit, ControlValueAccessor
         this.loadDepartments();
     }
 
-    /**
-     * Load departments from service
-     */
     loadDepartments(): void {
         this.departmentService.getDepartments().subscribe({
             next: (departments) => {
@@ -53,7 +46,6 @@ export class DepartmentSelectorComponent implements OnInit, ControlValueAccessor
         });
     }
 
-    // ControlValueAccessor implementation
     writeValue(value: string): void {
         this.value = value || '';
     }
@@ -70,9 +62,6 @@ export class DepartmentSelectorComponent implements OnInit, ControlValueAccessor
         this.disabled = isDisabled;
     }
 
-    /**
-     * Handle value change from select element
-     */
     onValueChange(event: Event): void {
         const target = event.target as HTMLSelectElement;
         if (target) {

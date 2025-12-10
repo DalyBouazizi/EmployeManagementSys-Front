@@ -10,9 +10,6 @@ import { SearchFilterPipe } from '../../pipes/search-filter.pipe';
 import { DepartmentFilterPipe } from '../../pipes/department-filter.pipe';
 import { delay } from 'rxjs';
 
-/**
- * Main component to display employee list with search and filter
- */
 @Component({
     selector: 'app-employee-list',
     standalone: true,
@@ -33,7 +30,6 @@ export class EmployeeListComponent implements OnInit {
     loading: boolean = true;
     error: string = '';
 
-    // Filter state
     searchTerm: string = '';
     selectedDepartment: string = '';
     selectedStatus: string = '';
@@ -47,9 +43,6 @@ export class EmployeeListComponent implements OnInit {
         this.loadEmployees();
     }
 
-    /**
-     * Load all employees from service
-     */
     loadEmployees(): void {
         this.loading = true;
 
@@ -57,6 +50,7 @@ export class EmployeeListComponent implements OnInit {
             next: (employees) => {
                 this.employees = employees;
                 this.applyFilters();
+                this.sharedDataService.updateEmployeeCount(employees.length);
                 this.loading = false;
             },
             error: (error) => {
@@ -67,37 +61,24 @@ export class EmployeeListComponent implements OnInit {
         });
     }
 
-    /**
-     * Handle search term changes
-     */
     onSearchChange(term: string): void {
         this.searchTerm = term;
         this.applyFilters();
     }
 
-    /**
-     * Handle department filter changes
-     */
     onDepartmentChange(department: string): void {
         this.selectedDepartment = department;
         this.applyFilters();
     }
 
-    /**
-     * Handle status filter changes
-     */
     onStatusChange(status: string): void {
         this.selectedStatus = status;
         this.applyFilters();
     }
 
-    /**
-     * Apply all filters to employee list
-     */
     applyFilters(): void {
         let result = [...this.employees];
 
-        // Apply search filter
         if (this.searchTerm) {
             const term = this.searchTerm.toLowerCase();
             result = result.filter(emp =>
@@ -108,12 +89,10 @@ export class EmployeeListComponent implements OnInit {
             );
         }
 
-        // Apply department filter
         if (this.selectedDepartment) {
             result = result.filter(emp => emp.department === this.selectedDepartment);
         }
 
-        // Apply status filter
         if (this.selectedStatus) {
             result = result.filter(emp => emp.status === this.selectedStatus);
         }
@@ -121,9 +100,6 @@ export class EmployeeListComponent implements OnInit {
         this.filteredEmployees = result;
     }
 
-    /**
-     * Handle employee deletion
-     */
     onDeleteEmployee(id: number): void {
         this.employeeService.deleteEmployee(id).subscribe({
             next: () => {

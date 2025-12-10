@@ -3,13 +3,9 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { EmployeeService } from '../../services/employee.service';
-import { SharedDataService } from '../../services/shared-data.service';
 import { Employee } from '../../models/employee.model';
 import { DepartmentSelectorComponent } from '../department-selector/department-selector.component';
 
-/**
- * Component for creating and editing employees with form validation
- */
 @Component({
     selector: 'app-employee-form',
     standalone: true,
@@ -30,8 +26,7 @@ export class EmployeeFormComponent implements OnInit {
         private fb: FormBuilder,
         private route: ActivatedRoute,
         private router: Router,
-        private employeeService: EmployeeService,
-        private sharedDataService: SharedDataService
+        private employeeService: EmployeeService
     ) {
         this.initForm();
     }
@@ -45,9 +40,6 @@ export class EmployeeFormComponent implements OnInit {
         }
     }
 
-    /**
-     * Initialize the reactive form with validators
-     */
     initForm(): void {
         this.employeeForm = this.fb.group({
             firstName: ['', [Validators.required, Validators.minLength(2)]],
@@ -63,9 +55,6 @@ export class EmployeeFormComponent implements OnInit {
         });
     }
 
-    /**
-     * Load employee data for editing
-     */
     loadEmployee(id: number): void {
         this.loading = true;
         this.employeeService.getEmployeeById(id).subscribe({
@@ -80,36 +69,18 @@ export class EmployeeFormComponent implements OnInit {
         });
     }
 
-    /**
-     * Submit form to create or update employee
-     */
     onSubmit(): void {
-        console.log('Form submitted');
-        console.log('Form valid:', this.employeeForm.valid);
-        console.log('Form value:', this.employeeForm.value);
-
         if (this.employeeForm.invalid) {
-            console.log('Form is invalid, marking fields as touched');
-            Object.keys(this.employeeForm.controls).forEach(key => {
-                const control = this.employeeForm.get(key);
-                if (control?.invalid) {
-                    console.log(`${key} is invalid:`, control.errors);
-                }
-            });
             this.markFormGroupTouched(this.employeeForm);
             return;
         }
 
         this.submitting = true;
         const employeeData: Employee = this.employeeForm.value;
-        console.log('Submitting employee data:', employeeData);
 
         if (this.isEditMode && this.employeeId) {
-            // Update existing employee
-            console.log('Update mode');
             this.employeeService.updateEmployee(this.employeeId, employeeData).subscribe({
                 next: () => {
-                    console.log('Employee updated successfully');
                     this.router.navigate(['/employees', this.employeeId]);
                     this.submitting = false;
                 },
@@ -119,11 +90,8 @@ export class EmployeeFormComponent implements OnInit {
                 }
             });
         } else {
-            // Create new employee
-            console.log('Create mode');
             this.employeeService.createEmployee(employeeData).subscribe({
                 next: () => {
-                    console.log('Employee created successfully');
                     this.router.navigate(['/employees']);
                     this.submitting = false;
                 },
@@ -135,9 +103,6 @@ export class EmployeeFormComponent implements OnInit {
         }
     }
 
-    /**
-     * Mark all form fields as touched to show validation errors
-     */
     private markFormGroupTouched(formGroup: FormGroup): void {
         Object.keys(formGroup.controls).forEach(key => {
             const control = formGroup.get(key);
@@ -145,17 +110,11 @@ export class EmployeeFormComponent implements OnInit {
         });
     }
 
-    /**
-     * Check if a field has an error and has been touched
-     */
     hasError(fieldName: string, errorType: string): boolean {
         const field = this.employeeForm.get(fieldName);
         return !!(field?.hasError(errorType) && field?.touched);
     }
 
-    /**
-     * Check if a field is invalid and touched
-     */
     isFieldInvalid(fieldName: string): boolean {
         const field = this.employeeForm.get(fieldName);
         return !!(field?.invalid && field?.touched);

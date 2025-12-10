@@ -5,9 +5,6 @@ import { EmployeeService } from '../../services/employee.service';
 import { Employee } from '../../models/employee.model';
 import { PhoneFormatPipe } from '../../pipes/phone-format.pipe';
 
-/**
- * Component to display detailed employee information
- */
 @Component({
     selector: 'app-employee-detail',
     standalone: true,
@@ -32,9 +29,6 @@ export class EmployeeDetailComponent implements OnInit {
         }
     }
 
-    /**
-     * Load employee details by ID
-     */
     loadEmployee(id: number): void {
         this.loading = true;
         this.employeeService.getEmployeeById(id).subscribe({
@@ -50,9 +44,6 @@ export class EmployeeDetailComponent implements OnInit {
         });
     }
 
-    /**
-     * Get status badge color based on employee status
-     */
     getStatusColor(): string {
         if (!this.employee) return 'bg-gray-100 text-gray-800';
 

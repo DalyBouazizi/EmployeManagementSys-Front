@@ -1,6 +1,3 @@
-/**
- * Employee interface representing an employee in the system
- */
 export interface Employee {
     id?: number;
     firstName: string;

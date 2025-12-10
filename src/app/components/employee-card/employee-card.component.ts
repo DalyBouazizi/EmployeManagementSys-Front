@@ -6,10 +6,6 @@ import { PhoneFormatPipe } from '../../pipes/phone-format.pipe';
 import { HighlightDirective } from '../../directives/highlight.directive';
 import { TooltipDirective } from '../../directives/tooltip.directive';
 
-/**
- * Nested component to display individual employee card
- * Used within employee-list component
- */
 @Component({
     selector: 'app-employee-card',
     standalone: true,
@@ -21,18 +17,12 @@ export class EmployeeCardComponent {
     @Input() employee!: Employee;
     @Output() delete = new EventEmitter<number>();
 
-    /**
-     * Emit delete event to parent component
-     */
     onDelete(): void {
         if (this.employee.id && confirm(`Are you sure you want to delete ${this.employee.firstName} ${this.employee.lastName}?`)) {
             this.delete.emit(this.employee.id);
         }
     }
 
-    /**
-     * Get status badge color based on employee status
-     */
     getStatusColor(): string {
         switch (this.employee.status) {
             case 'Active':

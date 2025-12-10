@@ -2,12 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { DepartmentService } from '../../services/department.service';
-import { SharedDataService } from '../../services/shared-data.service';
 import { Department } from '../../models/department.model';
 
-/**
- * Component for managing departments with CRUD operations
- */
 @Component({
     selector: 'app-department-list',
     standalone: true,
@@ -25,8 +21,7 @@ export class DepartmentListComponent implements OnInit {
 
     constructor(
         private fb: FormBuilder,
-        private departmentService: DepartmentService,
-        private sharedDataService: SharedDataService
+        private departmentService: DepartmentService
     ) {
         this.initForm();
     }
@@ -35,9 +30,6 @@ export class DepartmentListComponent implements OnInit {
         this.loadDepartments();
     }
 
-    /**
-     * Initialize department form
-     */
     initForm(): void {
         this.departmentForm = this.fb.group({
             name: ['', [Validators.required, Validators.minLength(2)]],
@@ -46,9 +38,6 @@ export class DepartmentListComponent implements OnInit {
         });
     }
 
-    /**
-     * Load all departments
-     */
     loadDepartments(): void {
         this.loading = true;
         this.departmentService.getDepartments().subscribe({
@@ -63,9 +52,6 @@ export class DepartmentListComponent implements OnInit {
         });
     }
 
-    /**
-     * Show form for adding new department
-     */
     showAddForm(): void {
         this.isEditMode = false;
         this.editingId = null;
@@ -73,9 +59,6 @@ export class DepartmentListComponent implements OnInit {
         this.showForm = true;
     }
 
-    /**
-     * Show form for editing department
-     */
     editDepartment(department: Department): void {
         this.isEditMode = true;
         this.editingId = department.id!;
@@ -83,9 +66,6 @@ export class DepartmentListComponent implements OnInit {
         this.showForm = true;
     }
 
-    /**
-     * Cancel form and hide it
-     */
     cancelForm(): void {
         this.showForm = false;
         this.departmentForm.reset();
@@ -93,9 +73,6 @@ export class DepartmentListComponent implements OnInit {
         this.editingId = null;
     }
 
-    /**
-     * Submit form to create or update department
-     */
     onSubmit(): void {
         if (this.departmentForm.invalid) {
             Object.keys(this.departmentForm.controls).forEach(key => {
@@ -107,7 +84,6 @@ export class DepartmentListComponent implements OnInit {
         const departmentData: Department = this.departmentForm.value;
 
         if (this.isEditMode && this.editingId) {
-            // Update existing department
             this.departmentService.updateDepartment(this.editingId, departmentData).subscribe({
                 next: () => {
                     this.loadDepartments();
@@ -118,7 +94,6 @@ export class DepartmentListComponent implements OnInit {
                 }
             });
         } else {
-            // Create new department
             this.departmentService.createDepartment(departmentData).subscribe({
                 next: () => {
                     this.loadDepartments();
@@ -131,9 +106,6 @@ export class DepartmentListComponent implements OnInit {
         }
     }
 
-    /**
-     * Delete department
-     */
     deleteDepartment(id: number, name: string): void {
         if (confirm(`Are you sure you want to delete ${name} department?`)) {
             this.departmentService.deleteDepartment(id).subscribe({
@@ -147,17 +119,11 @@ export class DepartmentListComponent implements OnInit {
         }
     }
 
-    /**
-     * Check if field has error
-     */
     hasError(fieldName: string, errorType: string): boolean {
         const field = this.departmentForm.get(fieldName);
         return !!(field?.hasError(errorType) && field?.touched);
     }
 
-    /**
-     * Check if field is invalid
-     */
     isFieldInvalid(fieldName: string): boolean {
         const field = this.departmentForm.get(fieldName);
         return !!(field?.invalid && field?.touched);
